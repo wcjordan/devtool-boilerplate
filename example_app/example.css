@@ -1,0 +1,31 @@
+.shape {
+  display: inline-block;
+  border: 10px solid transparent;
+}
+
+.highlighted {
+  border-color: yellow;
+}
+
+.square {
+	width: 100px;
+	height: 100px;
+	background: red;
+}
+
+.circle {
+	width: 100px;
+	height: 100px;
+	background: green;
+	-moz-border-radius: 50px;
+	-webkit-border-radius: 50px;
+	border-radius: 50px;
+}
+
+.triangle {
+	width: 0;
+	height: 0;
+	border-left: 50px solid transparent;
+	border-right: 50px solid transparent;
+	border-bottom: 100px solid blue;
+}

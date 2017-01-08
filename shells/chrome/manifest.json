@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "Boilerplate Developer Tools",
+  "description": "Adds Boilerplate debugging tools to the Chrome Developer Tools.",
+  "version": "0.1",
+  "minimum_chrome_version": "54",
+  "icons": {
+    "64": "icons/cog.png"
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "web_accessible_resources": ["injected_script.js"],
+  "devtools_page": "devtool.html",
+  /*"options_page": "panel.html", // Uncomment for debugging*/
+  "background": {
+    "scripts": [ "background.js" ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*example.html*"],
+      "js": ["injector.js"],
+      "run_at": "document_start"
+    }
+  ]
+}
