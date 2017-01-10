@@ -63,5 +63,5 @@ render(
   <Provider store={store}>
     <BoundShapePicker />
   </Provider>,
-	document.getElementById('mount')
+	document.getElementById('devtoolMount')
 );

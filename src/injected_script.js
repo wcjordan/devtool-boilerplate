@@ -9,6 +9,10 @@ devtool.onDisconnect(function() {
 
 setTimeout(function() {
   const pushStateSelection = function(selectedShape) {
+    if (!selectedShape) {
+      return;
+    }
+
     devtool.send({
       type: 'data_change',
       data: {

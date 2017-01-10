@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf8">
+        <title>Devtool Example</title>
+        <style>
+            #examplePage {
+                flex: 1;
+                border: none;
+                border-bottom: 1px solid #ccc;
+            }
+            #devtoolMount {
+                display: flex;
+                height: 400px;
+            }
+            body {
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <iframe id="examplePage" src="../example_app/example.html"></iframe>
+        <div id="devtoolMount"></div>
+        <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+          <script type="text/javascript" src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
+        <% } %>
+    </body>
+</html>

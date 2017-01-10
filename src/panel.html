@@ -5,7 +5,7 @@
         <link rel="stylesheet" href="panel.css">
     </head>
     <body>
-        <div id="mount">Initial load failed</div>
+        <div id="devtoolMount">Initial load failed</div>
         <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
           <script type="text/javascript" src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
         <% } %>

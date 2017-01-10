@@ -35,7 +35,7 @@ RuntimeConnection.prototype.onDisconnect = function(handler) {
   this.disconnectListeners.push(handler);
 };
 
-RuntimeConnection.prototype.shutdown = function(data) {
+RuntimeConnection.prototype.shutdown = function() {
   this.listeners = [];
 };
 

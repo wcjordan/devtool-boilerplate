@@ -1,16 +1,17 @@
 'use strict';
 
-const WindowConnection = function(sourceName) {
+const WindowConnection = function(sourceName, win) {
+  this.win = win || window;
   this.sourceName = sourceName;
   this.listeners = [];
   this.disconnectListeners = [];
-  this.handleMessageFromPage = this.handleMessageFromPage.bind(this);
+  this.handleMessage = this.handleMessage.bind(this);
 
-  window.addEventListener('message', this.handleMessageFromPage);
+  this.win.addEventListener('message', this.handleMessage);
 };
 
 WindowConnection.prototype.send = function(data) {
-  window.postMessage({
+  this.win.postMessage({
     source: this.sourceName,
     payload: data,
   }, '*');
@@ -24,16 +25,16 @@ WindowConnection.prototype.onDisconnect = function(handler) {
   this.disconnectListeners.push(handler);
 };
 
-WindowConnection.prototype.shutdown = function(data) {
-  window.postMessage({
+WindowConnection.prototype.shutdown = function() {
+  this.win.postMessage({
     source: this.sourceName,
     payload: 'shutdown'
   }, '*');
-  window.removeEventListener('message', this.handleMessageFromPage);
+  this.win.removeEventListener('message', this.handleMessage);
   this.listeners = [];
 };
 
-WindowConnection.prototype.handleMessageFromPage = function(evt) {
+WindowConnection.prototype.handleMessage = function(evt) {
   if (!evt.data || evt.data.source === this.sourceName) {
     return;
   }

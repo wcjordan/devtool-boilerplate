@@ -9,8 +9,9 @@ module.exports = {
     background: './shells/chrome/background.js',
     devtool: './shells/chrome/devtool.js',
     injector: './shells/chrome/injector.js',
-    injected_script: './shells/chrome/injected_script.js',
-    panel: './src/panel.jsx'
+    injected_script: './src/injected_script.js',
+    panel: './src/panel.jsx',
+    plainShell: './shells/plain/plainShell.js'
   },
   output: {
     path: __dirname + '/build',
@@ -38,6 +39,12 @@ module.exports = {
       filename: 'devtool.html',
       template: 'shells/chrome/devtool.html',
       chunks: ['devtool']
+    }),
+    new HtmlWebpackPlugin({
+      inject: false,
+      filename: 'plainShell.html',
+      template: 'shells/plain/plainShell.html',
+      chunks: ['plainShell']
     }),
     new CopyWebpackPlugin([{
       from: 'shells/chrome/manifest.json'
