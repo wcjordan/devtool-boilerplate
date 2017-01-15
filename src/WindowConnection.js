@@ -10,6 +10,11 @@ const WindowConnection = function(sourceName, win) {
   this.win.addEventListener('message', this.handleMessage);
 };
 
+WindowConnection.side = {
+  BOILERPLATE_INJECTED: 'BOILERPLATE_INJECTED',
+  BOILERPLATE_INJECTOR: 'BOILERPLATE_INJECTOR',
+};
+
 WindowConnection.prototype.send = function(data) {
   this.win.postMessage({
     source: this.sourceName,
@@ -34,8 +39,13 @@ WindowConnection.prototype.shutdown = function() {
   this.listeners = [];
 };
 
+WindowConnection.prototype._isInvalidMsgSource = function(msgSourceName) {
+  const validSource = msgSourceName in WindowConnection.side;
+  return !validSource || msgSourceName === this.sourceName;
+};
+
 WindowConnection.prototype.handleMessage = function(evt) {
-  if (!evt.data || evt.data.source === this.sourceName) {
+  if (!evt.data || this._isInvalidMsgSource(evt.data.source)) {
     return;
   }
 

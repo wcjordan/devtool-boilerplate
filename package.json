@@ -3,9 +3,9 @@
   "repository": "wcjordan/devtool-boilerplate",
   "scripts": {
     "lint": "eslint src shells",
-    "build": "webpack",
-    "dev": "webpack --watch",
-    "dev-server": "webpack-dev-server --progress"
+    "build": "webpack --config shells/chrome/webpack.config.js",
+    "dev-chrome": "webpack --watch --env.dev --config shells/chrome/webpack.config.js",
+    "dev-plain": "webpack-dev-server --inline --hot --config shells/plain/webpack.config.js"
   },
   "devDependencies": {
     "babel-core": "6.21.0",

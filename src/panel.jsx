@@ -49,15 +49,20 @@ store.subscribe(function() {
   });
 });
 
-setTimeout(function() {
+const registerDevtool = function() {
+  if (!window.devtool) {
+    requestAnimationFrame(registerDevtool);
+    return;
+  }
+
   window.devtool.listen(function(payload) {
     store.dispatch(Actions.updateShape(payload.data.selectedShape));
   });
-
   window.devtool.send({
     type: 'init'
   });
-});
+};
+requestAnimationFrame(registerDevtool);
 
 render(
   <Provider store={store}>

@@ -2,7 +2,7 @@
 
 import WindowConnection from './WindowConnection';
 
-const devtool = new WindowConnection('boilerplate_injected');
+const devtool = new WindowConnection(WindowConnection.side.BOILERPLATE_INJECTED);
 devtool.onDisconnect(function() {
   devtool.shutdown();
 });

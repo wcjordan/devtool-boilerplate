@@ -14,5 +14,5 @@ script.parentNode.removeChild(script);
 const connectionToDevtool = new RuntimeConnection(chrome.runtime.connect({
   name: 'injector',
 }));
-const connectionToWebpage = new WindowConnection('boilerplate_injector');
+const connectionToWebpage = new WindowConnection(WindowConnection.side.BOILERPLATE_INJECTOR);
 wireConnections(connectionToDevtool, connectionToWebpage);
