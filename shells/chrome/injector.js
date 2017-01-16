@@ -1,5 +1,4 @@
-'use strict';
-
+/* global chrome */
 import RuntimeConnection from './RuntimeConnection';
 import WindowConnection from '../../src/WindowConnection';
 import wireConnections from './wireConnections';

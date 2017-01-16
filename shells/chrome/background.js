@@ -1,10 +1,9 @@
-'use strict';
-
+/* global chrome */
 import RuntimeConnection from './RuntimeConnection';
 import wireConnections from './wireConnections';
 
-let connections = {};
-chrome.runtime.onConnect.addListener(function(connection) {
+const connections = {};
+chrome.runtime.onConnect.addListener((connection) => {
   let tabId = connection.name;
   let side = 'devtools';
   if (tabId === 'injector') {
@@ -19,12 +18,12 @@ chrome.runtime.onConnect.addListener(function(connection) {
   const tabConnections = connections[tabId];
   const wrappedConnection = new RuntimeConnection(connection);
   tabConnections[side] = wrappedConnection;
-  wrappedConnection.onDisconnect(function() {
+  wrappedConnection.onDisconnect(() => {
     if (tabConnections[side] === wrappedConnection) {
       tabConnections[side] = null;
     }
   });
-  
+
   if (tabConnections.devtools && tabConnections.injector) {
     wireConnections(tabConnections.devtools, tabConnections.injector);
   }

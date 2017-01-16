@@ -1,11 +1,10 @@
-'use strict';
-
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 const webpack = require('webpack');
 
-module.exports = function(env) {
-  env = env || {};
+module.exports = function getConfig(envIn) {
+  const env = envIn || {};
   const config = {
     devtool: env.dev ? 'cheap-module-eval-source-map' : 'source-map',
     entry: {
@@ -16,16 +15,19 @@ module.exports = function(env) {
       panel: './src/panel.jsx',
     },
     output: {
-      path: __dirname + '/../../build',
+      path: path.join(__dirname, '/../../build'),
       filename: '[name].js',
+    },
+    resolve: {
+      extensions: ['.js', '.json', '.jsx'],
     },
     module: {
       loaders: [{
         test: /\.jsx?$/,
-        loader:  'babel-loader',
+        loader: 'babel-loader',
         exclude: /node_modules/,
         query: {
-          presets: ['es2015', 'react']
+          presets: ['es2015', 'react'],
         },
       }],
     },
@@ -34,34 +36,34 @@ module.exports = function(env) {
         inject: false,
         filename: 'panel.html',
         template: 'src/panel.html',
-        chunks: ['panel']
+        chunks: ['panel'],
       }),
       new HtmlWebpackPlugin({
         inject: false,
         filename: 'devtool.html',
         template: 'shells/chrome/devtool.html',
-        chunks: ['devtool']
+        chunks: ['devtool'],
       }),
       new CopyWebpackPlugin([{
-        from: 'shells/chrome/manifest.json'
+        from: 'shells/chrome/manifest.json',
       }, {
-        from: 'src/panel.css'
+        from: 'src/panel.css',
       }, {
         from: 'icons/cog.png',
-        to: 'icons/cog.png'
+        to: 'icons/cog.png',
       }]),
       new webpack.DefinePlugin({
         'process.env': {
-          NODE_ENV: env.dev ? JSON.stringify('development') : JSON.stringify('production')
-        }
-      })
-    ]
+          NODE_ENV: env.dev ? JSON.stringify('development') : JSON.stringify('production'),
+        },
+      }),
+    ],
   };
 
   if (!env.dev) {
     config.plugins.push(new webpack.optimize.UglifyJsPlugin({
       minimize: true,
-      sourceMap: true
+      sourceMap: true,
     }));
   }
   return config;

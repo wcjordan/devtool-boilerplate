@@ -1,14 +1,10 @@
-'use strict';
-
 import WindowConnection from './WindowConnection';
 
 const devtool = new WindowConnection(WindowConnection.side.BOILERPLATE_INJECTED);
-devtool.onDisconnect(function() {
-  devtool.shutdown();
-});
+devtool.onDisconnect(() => devtool.shutdown());
 
-setTimeout(function() {
-  const pushStateSelection = function(selectedShape) {
+setTimeout(() => {
+  function pushStateSelection(selectedShape) {
     if (!selectedShape) {
       return;
     }
@@ -16,22 +12,22 @@ setTimeout(function() {
     devtool.send({
       type: 'data_change',
       data: {
-        selectedShape: selectedShape.children[0].classList[0]
-      }
+        selectedShape: selectedShape.children[0].classList[0],
+      },
     });
-  };
+  }
   pushStateSelection(document.getElementsByClassName('highlighted')[0]);
 
-  devtool.listen(function(payload) {
+  devtool.listen((payload) => {
     if (payload.type === 'init') {
       pushStateSelection(document.getElementsByClassName('highlighted')[0]);
       return;
     }
-    selectByName(payload.data.selectedShape);
+    window.selectByName(payload.data.selectedShape);
   });
 
   const oldOnSelect = window.onSelect;
-  window.onSelect = function(selectedShape) {
+  window.onSelect = function onSelect(selectedShape) {
     oldOnSelect(selectedShape);
     pushStateSelection(selectedShape);
   };

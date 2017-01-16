@@ -1,8 +1,5 @@
-'use strict';
-
-
 import WindowConnection from '../../src/WindowConnection';
-import devtoolPanel from '../../src/panel.jsx';
+import '../../src/panel';
 
 // Inject script to run on page
 const target = document.getElementById('examplePage');
@@ -11,4 +8,5 @@ script.src = '../injected_script.js';
 target.contentDocument.body.appendChild(script);
 
 // Setup devtools messaging connection
-window.devtool = new WindowConnection(WindowConnection.side.BOILERPLATE_INJECTOR, target.contentWindow);
+window.devtool = new WindowConnection(
+  WindowConnection.side.BOILERPLATE_INJECTOR, target.contentWindow);
